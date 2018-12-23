@@ -19,11 +19,15 @@ const createStore = () => {
         return state.carts.length
       },
       items: state => {
-        // let productsArr = JSON.parse(sessionStorage.getItem('products'))
-        let r = state.carts.filter(function(element, index, self) {
-          return self.indexOf(element) === index
-        })
-        return r
+        let productsArr = JSON.parse(sessionStorage.getItem('products'))
+        if (productsArr !== null) {
+          const result = [
+            ...new Set(productsArr.map(item => JSON.stringify(item)))
+          ].map(item => JSON.parse(item))
+          return result
+        } else {
+          return state.carts
+        }
       },
       sum: state => {
         let r = state.carts.filter(function(element, index, self) {
@@ -39,13 +43,13 @@ const createStore = () => {
     mutations: {
       add_to_cart: (state, product) => {
         state.carts.push(product)
+        let productsStr = JSON.stringify(state.carts)
+        sessionStorage.setItem('products', productsStr)
         if (!product.qty) {
           product.qty = 1
         } else {
           product.qty += 1
         }
-        let productsStr = JSON.stringify(state.carts)
-        sessionStorage.setItem('products', productsStr)
       },
       minus_item: (state, product) => {
         let index = state.carts.indexOf(product)
