@@ -5,29 +5,29 @@
       class="cart-info">
       <p class="title">購物車商品</p>
       <div
-        v-for="item in items"
-        :key="item.id"
+        v-for="(product, index) in items"
+        :key="index"
         class="d-flex align-items-center item">
         <img
-          :src="item.imgUrl"
+          :src="product.imgUrl"
           class="product-img mr-3">
         <div class="product-info d-flex mr-3">
-          <span class="product-name">{{ item.name }}</span>
+          <span class="product-name">{{ product.name }}</span>
         </div>
         <div class="products-counters d-flex mr-3">
           <span
             class="product-counter"
-            @click="addToCart(item)">+</span>
-          <span class="product-number"> {{ item.qty ? item.qty : 1 }}
+            @click="addToCart(product)">+</span>
+          <span class="product-number"> {{ product.qty ? product.qty : 1 }}
           </span>
           <span
             class="product-counter"
-            @click="minusItem(item)">-</span>
+            @click="minusItem(product)">-</span>
         </div>
-        <span class="mr-3">NT $ {{ (item.price)*(item.qty) }} </span>
+        <span class="mr-3">NT $ {{ (product.price)*(product.qty) }} </span>
         <div
           class="delete"
-          @click="deleteItem(item)">
+          @click="deleteItem(product)">
           <font-awesome-icon icon="times" />
         </div>
       </div>
@@ -147,31 +147,37 @@ export default {
       return arr
     }
   },
+  asyncData({ params }) {
+    return axios.get('http://localhost:3003/products').then(res => {
+      return { products: res.data }
+    })
+  },
   mounted() {
-    axios
-      .get('http://localhost:3003/products')
-      .then(response => {
-        this.products = response.data
-        console.log(this.products)
-        let arr = []
-        for (let i = 0; i < this.products.length; i++) {
-          switch (this.products[i].category) {
-            case '本日精選':
-              this.selected.push(this.products[i])
-              console.log(this.selected)
-              break
-            case '人氣推薦':
-              this.recommend.push(this.products[i])
-              break
-            case '新品上市':
-              this.newIn.push(this.products[i])
-              break
-          }
-        }
-      })
-      .catch(err => {
-        console.log('error!')
-      })
+    this.$store.commit('updateCarts')
+    // axios
+    //   .get('http://localhost:3003/products')
+    //   .then(response => {
+    //     this.products = response.data
+    //     console.log(this.products)
+    //     let arr = []
+    //     for (let i = 0; i < this.products.length; i++) {
+    //       switch (this.products[i].category) {
+    //         case '本日精選':
+    //           this.selected.push(this.products[i])
+    //           console.log(this.selected)
+    //           break
+    //         case '人氣推薦':
+    //           this.recommend.push(this.products[i])
+    //           break
+    //         case '新品上市':
+    //           this.newIn.push(this.products[i])
+    //           break
+    //       }
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.log('error!')
+    //   })
   },
   methods: {
     changeCategory(categoryName) {

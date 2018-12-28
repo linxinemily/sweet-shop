@@ -16,14 +16,17 @@ const createStore = () => {
     },
     getters: {
       items_count_in_cart: state => {
-        return state.carts.length
+        if (state.carts !== null) {
+          return state.carts.length
+        } else {
+          return 0
+        }
       },
       items: state => {
-        let productsArr = JSON.parse(sessionStorage.getItem('products'))
-        if (productsArr !== null) {
-          const result = [
-            ...new Set(productsArr.map(item => JSON.stringify(item)))
-          ].map(item => JSON.parse(item))
+        if (state.carts !== null) {
+          const result = state.carts.filter((element, index, self) => {
+            return self.indexOf(element) === index
+          })
           return result
         } else {
           return state.carts
@@ -41,20 +44,28 @@ const createStore = () => {
       }
     },
     mutations: {
+      updateCarts: state => {
+        state.carts = JSON.parse(sessionStorage.getItem('products'))
+      },
       add_to_cart: (state, product) => {
+        if (state.carts === null) {
+          state.carts = []
+        }
         state.carts.push(product)
-        let productsStr = JSON.stringify(state.carts)
-        sessionStorage.setItem('products', productsStr)
         if (!product.qty) {
           product.qty = 1
         } else {
           product.qty += 1
         }
+        let productsStr = JSON.stringify(state.carts)
+        sessionStorage.setItem('products', productsStr)
       },
       minus_item: (state, product) => {
         let index = state.carts.indexOf(product)
         state.carts.splice(index, 1)
         product.qty -= 1
+        let productsStr = JSON.stringify(state.carts)
+        sessionStorage.setItem('products', productsStr)
       },
       delete_item: (state, product) => {
         //把carts裡面和傳進來這個product相同的item都刪掉
@@ -63,7 +74,8 @@ const createStore = () => {
         })
         state.carts = r
         product.qty = 0
-        console.log(product)
+        let productsStr = JSON.stringify(state.carts)
+        sessionStorage.setItem('products', productsStr)
       }
     }
   })
