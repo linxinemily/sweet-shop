@@ -23,12 +23,12 @@
           <li class="nav-item active">
             <a
               class="nav-link"
-              href="#">首頁 <span class="sr-only">(current)</span></a>
+              @click.prevent="$router.push('/')">首頁 <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a
               class="nav-link"
-              href="#">甜點</a>
+              @click.prevent="$router.push('/shop')">商店</a>
           </li>
           <li class="nav-item">
             <a
@@ -112,5 +112,12 @@
     color: $color-primary;
     font-weight: 600;
   }
+}
+.nav-link {
+  cursor: pointer;
+  color: $color-primary !important;
+}
+.nav-link:hover {
+  color: $color-light !important;
 }
 </style>

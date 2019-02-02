@@ -1,5 +1,9 @@
 <template>
   <div>
+    <shopping-carts
+      @addToCart="addToCart"
+      @minusItem="minusItem"
+      @deleteItem="deleteItem"/>
     <section class="hero container">
       <img
         class="hero-img"
@@ -117,6 +121,7 @@
 
 <script>
 import Vue from 'vue'
+import shoppingCarts from '~/components/shoppingCarts'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
@@ -131,7 +136,27 @@ library.add(faEnvelope_SolidIcon)
 Vue.config.productionTip = false
 
 export default {
-  layout: 'mainNav'
+  layout: 'mainNav',
+  components: {
+    shoppingCarts
+  },
+  mounted() {
+    this.$store.commit('updateCarts')
+  },
+  methods: {
+    changeCategory(categoryName) {
+      this.category = categoryName
+    },
+    addToCart(product) {
+      this.$store.commit('add_to_cart', product)
+    },
+    minusItem(item) {
+      this.$store.commit('minus_item', item)
+    },
+    deleteItem(item) {
+      this.$store.commit('delete_item', item)
+    }
+  }
 }
 </script>
 

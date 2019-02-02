@@ -24,7 +24,7 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: [],
+  css: ['~assets/css/main.css'],
 
   /*
   ** Plugins to load before mounting the App
@@ -63,5 +63,9 @@ module.exports = {
         })
       }
     }
+  },
+  transition: {
+    name: 'fade',
+    mode: 'out-in'
   }
 }

@@ -4,19 +4,28 @@
       <div class="productList mb-5">
         <div class="title text-center">您的購物車</div>
         <div class="items mb-4 mt-4">
-          <div class="item d-flex justify-content-between align-items-center">
-            <img src="https://bit.ly/2zBDAxX">
+          <div
+            v-for="(item, index) in items"
+            :key="index"
+            class="item d-flex justify-content-between align-items-center">
+            <img :src="item.imgUrl">
             <div class="info">
-              <div class="name">焦糖馬卡龍</div>
-              <div class="singlePrice">$NT 1000</div>
+              <div class="name">{{ item.name }}</div>
+              <div class="singlePrice">{{ item.price }}</div>
             </div>
             <div class="products-counters d-flex mr-3">
-              <span class="product-counter">+</span>
-              <span class="product-number">1</span>
-              <span class="product-counter">-</span>
+              <span
+                class="product-counter"
+                @click="addToCart(item)">+</span>
+              <span class="product-number">{{ item.qty }}</span>
+              <span
+                class="product-counter"
+                @click="minusItem(item)">-</span>
             </div>
-            <div class="allPrice">$NT 1000</div>
-            <div class="delete">
+            <div class="allPrice">{{ item.qty * item.price }}</div>
+            <div
+              class="delete"
+              @click="deleteItem(product)">
               <font-awesome-icon icon="times" />
             </div>
           </div>
@@ -29,15 +38,15 @@
         <div class="content">
           <div class="detail d-flex justify-content-between">
             <div>小計</div>
-            <div>NT$ 1000</div>
+            <div>NT$ {{ sum }}</div>
           </div>
           <div class="detail d-flex justify-content-between mb-3">
-            <div>小計</div>
-            <div>NT$ 1000</div>
+            <div>運費</div>
+            <div>NT$ 80</div>
           </div>
           <div class="total d-flex justify-content-between">
             <div>總計</div>
-            <div>NT$ 1000</div>
+            <div>NT$ {{ sum + 80 }}</div>
           </div>
         </div>
       </div>
@@ -46,8 +55,27 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex'
+
 export default {
-  layout: 'mainNav'
+  layout: 'mainNav',
+  computed: {
+    ...mapGetters(['items_count_in_cart', 'items', 'sum'])
+  },
+  mounted() {
+    this.$store.commit('updateCarts')
+  },
+  methods: {
+    addToCart(product) {
+      this.$store.commit('add_to_cart', product)
+    },
+    minusItem(item) {
+      this.$store.commit('minus_item', item)
+    },
+    deleteItem(item) {
+      this.$store.commit('delete_item', item)
+    }
+  }
 }
 </script>
 
