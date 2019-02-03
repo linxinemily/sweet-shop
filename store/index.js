@@ -129,6 +129,14 @@ const createStore = () => {
       },
       addProduct: (state, post) => {
         state.allProducts.push(post)
+      },
+      editedProduct: (state, editedProduct) => {
+        for (let product of state.allProducts) {
+          if (product.id === editedProduct.id) {
+            product = editedProduct
+            break
+          }
+        }
       }
     },
     actions: {
@@ -153,6 +161,21 @@ const createStore = () => {
           .then(res => {
             console.log(res)
             vuexContext.commit('addProduct', product)
+          })
+          .catch(e => {
+            console.log(e)
+          })
+      },
+      editProduct(vuexContext, editedProduct) {
+        return axios
+          .put(
+            `https://dessert-shop-emliy.firebaseio.com/products/
+            ${editedProduct.id}.json`,
+            editedProduct
+          )
+          .then(res => {
+            console.log(res)
+            vuexContext.commit('editedProduct', editedProduct)
           })
           .catch(e => {
             console.log(e)

@@ -1,7 +1,7 @@
 <template>
   <div style="position:relative;">
     <div class="form-head">
-      <h3 class="form-title">新增商品</h3>
+      <h3 class="form-title">{{ formTitle }}</h3>
     </div>
     <div class="form-body">
       <div class="row">
@@ -28,12 +28,21 @@
               <input
                 v-model="editedProduct.name"
                 type="text">
+              <small
+                v-if="missingName && attemptSubmit"
+                class="error">請輸入商品名稱</small>
             </div>
             <div class="input-outer">
               <label for="name">商品價格</label>
               <input
                 v-model="editedProduct.price"
                 type="text">
+              <small
+                v-if="missingPrice && attemptSubmit"
+                class="error">請輸入商品價格</small>
+              <small
+                v-if="myIsNaN && attemptSubmit"
+                class="error" >請輸入數字</small>
             </div>
             <div class="input-outer">
               <label for="name">商品分類</label>
@@ -80,6 +89,10 @@ export default {
       type: Object,
       require: false,
       default: () => {}
+    },
+    formTitle: {
+      type: String,
+      default: '新增商品'
     }
   },
   data() {
@@ -91,10 +104,22 @@ export default {
         ? this.product
         : {
             name: '',
-            price: '',
+            price: null,
             category: '新品上市',
             imgUrl: this.imgUrl ? this.imgUrl : null
-          }
+          },
+      attemptSubmit: false
+    }
+  },
+  computed: {
+    missingName() {
+      return this.editedProduct.name === ''
+    },
+    missingPrice() {
+      return this.editedProduct.price === ''
+    },
+    myIsNaN() {
+      return isNaN(parseInt(this.editedProduct.price))
     }
   },
   methods: {
@@ -143,10 +168,12 @@ export default {
           console.log(e)
         })
     },
-    onSubmitForm() {
-      this.$store.dispatch('addProduct', this.editedProduct).then(() => {
-        this.$emit('cancel')
-      })
+    onSubmitForm(event) {
+      this.attemptSubmit = true
+      if (this.missingName || this.missingPrice || this.myIsNaN) {
+        event.preventDefault()
+      }
+      this.$emit('onSubmit', this.editedProduct)
     },
     cancel() {
       this.$emit('cancel')
@@ -215,5 +242,8 @@ export default {
     padding: 8px;
     outline: none;
   }
+}
+.error {
+  color: red;
 }
 </style>

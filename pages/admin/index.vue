@@ -10,7 +10,9 @@
       v-if="onAdd === true"
       class="add-new-form d-flex justify-content-center align-items-center">
       <div class="form-content">
-        <admin-form @cancel="onAdd = false"/>
+        <admin-form
+          @onSubmit="submitNewProduct"
+          @cancel="onAdd = false" />
       </div>
     </div>
     <div
@@ -19,6 +21,8 @@
       <div class="form-content">
         <admin-form
           :product="editingProduct"
+          form-title="編輯商品"
+          @onSubmit="submitEditedProduct"
           @cancel="onEdit = false"/>
       </div>
     </div>
@@ -80,6 +84,21 @@ export default {
     isEditing(product) {
       this.onEdit = true
       this.editingProduct = product
+    },
+    submitNewProduct(editedProduct) {
+      if (!editedProduct.name || !editedProduct.price) {
+        console.log('plz fill in!!')
+        this.errEmIsActive = true
+        return
+      }
+      this.$store.dispatch('addProduct', editedProduct).then(() => {
+        this.onAdd = false
+      })
+    },
+    submitEditedProduct(editedProduct) {
+      this.$store.dispatch('editProduct', editedProduct).then(() => {
+        this.onEdit = false
+      })
     }
   }
 }
