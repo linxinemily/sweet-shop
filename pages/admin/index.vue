@@ -48,7 +48,12 @@
             <td>{{ product.price }}</td>
             <td>{{ product.category }}</td>
             <td>
-              <button @click="isEditing(product)">編輯</button>
+              <button
+                class="btn-warning"
+                @click="isEditing(product)">編輯</button>
+              <button
+                class="btn-danger"
+                @click="deleteProduct(product)">刪除</button>
             </td>
           </tr>
         </tbody>
@@ -99,6 +104,9 @@ export default {
       this.$store.dispatch('editProduct', editedProduct).then(() => {
         this.onEdit = false
       })
+    },
+    deleteProduct(editedProduct) {
+      this.$store.dispatch('deleteProduct', editedProduct)
     }
   }
 }

@@ -127,8 +127,8 @@ const createStore = () => {
           }
         }
       },
-      addProduct: (state, post) => {
-        state.allProducts.push(post)
+      addProduct: (state, product) => {
+        state.allProducts.push(product)
       },
       editedProduct: (state, editedProduct) => {
         for (let product of state.allProducts) {
@@ -137,6 +137,12 @@ const createStore = () => {
             break
           }
         }
+      },
+      deleteProduct: (state, editedProduct) => {
+        let productIndex = state.allProducts.findIndex(
+          product => product.id === editedProduct.id
+        )
+        state.allProducts.splice(productIndex, 1)
       }
     },
     actions: {
@@ -158,9 +164,11 @@ const createStore = () => {
             'https://dessert-shop-emliy.firebaseio.com/products.json',
             product
           )
-          .then(res => {
-            console.log(res)
-            vuexContext.commit('addProduct', product)
+          .then(result => {
+            vuexContext.commit('addProduct', {
+              ...product,
+              id: result.data.name
+            })
           })
           .catch(e => {
             console.log(e)
@@ -169,13 +177,25 @@ const createStore = () => {
       editProduct(vuexContext, editedProduct) {
         return axios
           .put(
-            `https://dessert-shop-emliy.firebaseio.com/products/
-            ${editedProduct.id}.json`,
+            `https://dessert-shop-emliy.firebaseio.com/products/${editedProduct.id}.json`,
             editedProduct
           )
           .then(res => {
-            console.log(res)
             vuexContext.commit('editedProduct', editedProduct)
+          })
+          .catch(e => {
+            console.log(e)
+          })
+      },
+      deleteProduct(vuexContext, editedProduct) {
+        return axios
+          .delete(
+            `https://dessert-shop-emliy.firebaseio.com/products/${editedProduct.id}.json`
+          )
+          .then(res => {
+            console.log(res)
+            console.log('已經刪除' + editedProduct.name)
+            vuexContext.commit('deleteProduct', editedProduct)
           })
           .catch(e => {
             console.log(e)
