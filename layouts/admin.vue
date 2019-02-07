@@ -2,7 +2,9 @@
   <div style="overflow:hidden;">
     <div class="sideBar">
       <div class="img-logo">
-        <img src="../assets/images/logo-light.svg">
+        <nuxt-link to="/">
+          <img src="../assets/images/logo-light.svg">
+        </nuxt-link>
       </div>
       <ul class="admin-nav">
         <li>商品管理</li>
@@ -33,7 +35,7 @@
 .content {
   margin-left: 250px;
   border-radius: 4px;
-  padding: 30px;
+  padding-top: 0;
   background-color: #f2f2f2;
   min-height: 100vh;
 }

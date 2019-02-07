@@ -31,9 +31,9 @@
               @click.prevent="$router.push('/shop')">商店</a>
           </li>
           <li class="nav-item">
-            <a
+            <nuxt-link
               class="nav-link"
-              href="#">登入</a>
+              to="/admin">後台管理</nuxt-link>
           </li>
           <li class="nav-item">
             <a

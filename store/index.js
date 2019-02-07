@@ -1,5 +1,7 @@
 import Vuex from 'vuex'
 import axios from 'axios'
+import Cookie from 'js-cookie'
+import { request } from 'http';
 
 const createStore = () => {
   return new Vuex.Store({
@@ -10,7 +12,8 @@ const createStore = () => {
         selected: 0,
         recommend: 0,
         newIn: 0
-      }
+      },
+      token: null
     },
     getters: {
       items_count_in_cart: state => {
@@ -76,6 +79,9 @@ const createStore = () => {
       },
       loadedProducts: state => {
         return state.allProducts
+      },
+      isAuthenticate(state) {
+        return state.token != null
       }
     },
     mutations: {
@@ -143,6 +149,12 @@ const createStore = () => {
           product => product.id === editedProduct.id
         )
         state.allProducts.splice(productIndex, 1)
+      },
+      setToken: (state, token) => {
+        state.token = token
+      },
+      clearToken: state => {
+        state.token = null
       }
     },
     actions: {
@@ -161,7 +173,7 @@ const createStore = () => {
       addProduct(vuexContext, product) {
         return axios
           .post(
-            'https://dessert-shop-emliy.firebaseio.com/products.json',
+            `https://dessert-shop-emliy.firebaseio.com/products.json?auth=${vuexContext.state.token}`,
             product
           )
           .then(result => {
@@ -177,7 +189,7 @@ const createStore = () => {
       editProduct(vuexContext, editedProduct) {
         return axios
           .put(
-            `https://dessert-shop-emliy.firebaseio.com/products/${editedProduct.id}.json`,
+            `https://dessert-shop-emliy.firebaseio.com/products/${editedProduct.id}.json?auth=${vuexContext.state.token}`,
             editedProduct
           )
           .then(res => {
@@ -190,7 +202,7 @@ const createStore = () => {
       deleteProduct(vuexContext, editedProduct) {
         return axios
           .delete(
-            `https://dessert-shop-emliy.firebaseio.com/products/${editedProduct.id}.json`
+            `https://dessert-shop-emliy.firebaseio.com/products/${editedProduct.id}.json?auth=${vuexContext.state.token}`
           )
           .then(res => {
             console.log(res)
@@ -200,6 +212,67 @@ const createStore = () => {
           .catch(e => {
             console.log(e)
           })
+      },
+      authenticateUser(vuexContext, authData) {
+        let url =
+          'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyChazks0tpd0w9eZ37qRkVfXLyXmliVOsY'
+        if (!authData.isLogin) {
+          url =
+            'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyChazks0tpd0w9eZ37qRkVfXLyXmliVOsY'
+        }
+        return axios
+          .post(url, {
+            email: authData.email,
+            password: authData.password,
+            returnSecureToken: true
+          })
+          .then(res => {
+            vuexContext.commit('setToken', res.data.idToken)
+            localStorage.setItem('token', res.data.idToken)
+            localStorage.setItem('tokenExpiration', new Date().getTime() + Number.parseInt(res.data.expiresIn) * 1000)
+            Cookie.set('jwt', res.data.idToken)
+            Cookie.set('expirationDate', new Date().getTime() + Number.parseInt(res.data.expiresIn) * 1000)
+            console.log(res)
+          })
+      },
+      initAuth(vuexContext, req) {
+        let token
+        let expirationDate
+        console.log(req)
+        if (req) {
+          if (!req.headers.cookie) {
+            return
+          }
+          const jwtCookie = req.headers.cookie
+            .split(';')
+            .find(e => e.trim().startsWith('jwt='))
+          if (!jwtCookie) {
+            return
+          }
+          token = jwtCookie.split('=')[1]
+          expirationDate = req.headers.cookie
+            .split(';')
+            .find(e => e.trim().startsWith('expirationDate='))
+            .split('=')[1]
+        } else {
+          token = localStorage.getItem('token')
+          expirationDate = localStorage.getItem('tokenExpiration')
+        }
+        if (new Date().getTime() > +expirationDate || !token) {
+          console.log('no token or invalid token')
+          return
+        }
+        console.log('token:' + token)
+        vuexContext.commit('setToken', token)
+      },
+      logout(vuexContext) {
+        vuexContext.commit('clearToken')
+        Cookie.remove('jwt')
+        Cookie.remove('expirationDate')
+        if (process.client) {
+          localStorage.removeItem('token')
+          localStorage.removeItem('tokenExpiration')
+        }
       }
     }
   })
