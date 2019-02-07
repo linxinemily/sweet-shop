@@ -59,6 +59,7 @@ a {
   &:hover,
   &:active {
     background-color: $color-light;
+    text-decoration: none;
   }
 }
 
@@ -243,12 +244,18 @@ a {
     font-size: 20px;
     color: $color-primary;
     font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    &:hover {
+      background-color: $color-secondary;
+    }
   }
 }
 
 //subscribe
 
 .subscribe{
+    margin-top: 40px;
     background-color: $color-primary;
     padding: 40px 0;
     color: $color-white;

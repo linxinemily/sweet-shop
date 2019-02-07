@@ -29,7 +29,10 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['~/plugins/font-awesome.js'],
+  plugins: [
+    '~/plugins/font-awesome.js',
+    { src: '~/plugins/vue-carousel.js', ssr: false }
+  ],
 
   /*
   ** Nuxt.js modules

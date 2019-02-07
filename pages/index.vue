@@ -62,59 +62,9 @@
         class="slogan">
     </section>
     <section class="products container">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="product">
-            <div class="special">本日精選</div>
-            <div class="img-outer">
-              <div class="img-inner">
-                <div
-                  class="img"
-                  style="background-image:url('https://bit.ly/2zBjQuq')"/>
-              </div>
-            </div>
-            <div class="detail d-flex justify-content-between">
-              <div class="name">焦糖馬卡龍</div>
-              <div class="price">NT$ 450</div>
-            </div>
-            <div class="add">加入購物車</div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="product">
-            <div class="special">本日精選</div>
-            <div class="img-outer">
-              <div class="img-inner">
-                <div
-                  class="img"
-                  style="background-image:url('https://bit.ly/2zBDAxX')"/>
-              </div>
-            </div>
-            <div class="detail d-flex justify-content-between">
-              <div class="name">焦糖馬卡龍</div>
-              <div class="price">NT$ 450</div>
-            </div>
-            <div class="add">加入購物車</div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="product">
-            <div class="special">本日精選</div>
-            <div class="img-outer">
-              <div class="img-inner">
-                <div
-                  class="img"
-                  style="background-image:url('https://bit.ly/2QbVsVR')"/>
-              </div>
-            </div>
-            <div class="detail d-flex justify-content-between">
-              <div class="name">焦糖馬卡龍</div>
-              <div class="price">NT$ 450</div>
-            </div>
-            <div class="add">加入購物車</div>
-          </div>
-        </div>
-      </div>
+      <product-carousel
+        :threeCol="true"
+        @addToCart="addToCart" />
     </section>
   </div>
 </template>
@@ -122,23 +72,13 @@
 <script>
 import Vue from 'vue'
 import shoppingCarts from '~/components/shoppingCarts'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-
-// icon 要使用的標籤名稱 <font-awesome-icon>
-Vue.component('font-awesome-icon', FontAwesomeIcon)
-
-import { faArrowRight as ArrowRight_SolidIcon } from '@fortawesome/free-solid-svg-icons'
-library.add(ArrowRight_SolidIcon)
-import { faEnvelope as faEnvelope_SolidIcon } from '@fortawesome/free-solid-svg-icons'
-library.add(faEnvelope_SolidIcon)
-
-Vue.config.productionTip = false
+import productCarousel from '~/components/productCarousel'
 
 export default {
   layout: 'mainNav',
   components: {
-    shoppingCarts
+    shoppingCarts,
+    productCarousel,
   },
   mounted() {
     this.$store.commit('updateCarts')
@@ -155,6 +95,9 @@ export default {
     },
     deleteItem(item) {
       this.$store.commit('delete_item', item)
+    },
+    addToCart(product) {
+      this.$store.commit('add_to_cart', product)
     }
   }
 }
@@ -162,4 +105,5 @@ export default {
 
 <style lang="scss">
 @import '../assets/scss/main.scss';
+@import 'swiper/dist/css/swiper.css';
 </style>

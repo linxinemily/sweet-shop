@@ -38,7 +38,7 @@
           <li class="nav-item">
             <a
               class="nav-link"
-              href="#">
+              @click.prevent="$router.push('/checkOut')">
               <font-awesome-icon icon="shopping-cart" />
             </a>
           </li>

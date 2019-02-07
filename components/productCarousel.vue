@@ -1,28 +1,33 @@
 <template>
   <div class="row">
-    <div
-      v-for="(product, index) in filtered"
-      :key="index"
-      class="products"
-      :class="[threeCol ? 'col-md-4' : 'col-md-6']">
-      <div class="product">
-        <div class="special">{{ product.category }}</div>
-        <div class="img-outer">
-          <div class="img-inner">
-            <div
-              :style="{ 'background-image' : 'url(\'' + product.imgUrl + '\')' }"
-              class="img" />
+    <carousel
+      :perPage="3"
+      :autoplay="true"
+      :perPageCustom="[[0, 1], [768, 3]]">
+      <slide
+        v-for="(product, index) in filtered"
+        :key="index"
+        class="products pr-2 pl-2">
+        <div class="product">
+          <div class="special">{{ product.category }}</div>
+          <div class="img-outer">
+            <div class="img-inner">
+              <div
+                :style="{ 'background-image' : 'url(\'' + product.imgUrl + '\')' }"
+                class="img" />
+            </div>
           </div>
-        </div>
-        <div class="detail d-flex justify-content-between">
-          <div class="name">{{ product.name }}</div>
-          <div class="price">NT $ {{ product.price }}</div>
-        </div>
-        <div
-          class="add"
-          @click="addToCart(product)">加入購物車</div>
+          <div class="detail d-flex justify-content-between">
+            <div class="name">{{ product.name }}</div>
+            <div class="price">NT $ {{ product.price }}</div>
+          </div>
+          <div
+            class="add"
+            @click="addToCart(product)">加入購物車
+          </div>
       </div>
-    </div>
+      </slide>
+    </carousel>
   </div>
 </template>
 
@@ -79,3 +84,17 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '../assets/scss/main.scss';
+.VueCarousel {
+  width: 100%;
+}
+.VueCarousel-dot-container .VueCarousel-dot.VueCarousel-dot--active {
+  background-color: $color-primary!important;
+  &:focus {
+    outline: none!important;
+  }
+}
+</style>
+

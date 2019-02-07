@@ -3,6 +3,16 @@
     <div class="d-flex">
       <div class="productList mb-5">
         <div class="title text-center">您的購物車</div>
+        <div
+          class="cta-block d-flex justify-content-center align-items-center"
+          v-if="!items || !items.lenght">
+          <div class="text-center mt-4 mb-4">
+            <p class="text-center mb-4">您的購物車裡面還沒有東西呢，去商店逛逛吧！</p>
+            <nuxt-link
+              class="btn-primary"
+              to="/shop">前往商店</nuxt-link>
+            </div>
+        </div>
         <div class="items mb-4 mt-4">
           <div
             v-for="(item, index) in items"
@@ -25,7 +35,7 @@
             <div class="allPrice">{{ item.qty * item.price }}</div>
             <div
               class="delete"
-              @click="deleteItem(product)">
+              @click="deleteItem(item)">
               <font-awesome-icon icon="times" />
             </div>
           </div>
@@ -86,10 +96,10 @@ export default {
   width: calc(100% - 300px);
   margin-right: 20px;
   color: $color-primary;
+  border:1px solid $color-lighter;
+  height: 100%;
   .title {
     background-color: $color-lighter;
-    height: 65px;
-    line-height: 65px;
     font-weight: 600;
     color: $color-primary;
     font-size: 1.2rem;
@@ -151,8 +161,6 @@ export default {
   .title {
     color: $color-white;
     background-color: $color-primary;
-    height: 65px;
-    line-height: 65px;
     font-size: 1.2rem;
     letter-spacing: 2px;
   }
