@@ -1,6 +1,6 @@
 # shop-nuxt
 
-> My lovely Nuxt.js project
+> My lovely Nuxt.js project -test
 
 ## Build Setup
 
