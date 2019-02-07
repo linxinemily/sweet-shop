@@ -76,3 +76,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.my-cart {
+  z-index: 1000;
+}
+</style>

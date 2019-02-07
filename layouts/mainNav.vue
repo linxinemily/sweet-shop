@@ -6,16 +6,6 @@
         to="/">
         <img src="../assets/images/logo-all-dark.svg">
       </nuxt-link>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon" />
-      </button>
       <div
         id="navbarSupportedContent"
         class="collapse navbar-collapse">
@@ -44,7 +34,40 @@
           </li>
         </ul>
       </div>
+      <div
+        class="ham"
+        @click="showMobileNav = !showMobileNav">
+        <font-awesome-icon icon="bars" />
+      </div>
     </nav>
+    <div
+      class="navbar-hide"
+      :class="{ 'navbar-open' : showMobileNav}">
+      <ul class="mobile-nav">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            @click.prevent="$router.push('/')">首頁 <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            @click.prevent="$router.push('/shop')">商店</a>
+        </li>
+        <li class="nav-item">
+          <nuxt-link
+            class="nav-link"
+            to="/admin">後台管理</nuxt-link>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            @click.prevent="$router.push('/checkOut')">
+             購物車
+          </a>
+        </li>
+      </ul>
+    </div>
     <nuxt/>
     <section class="subscribe container-fluid">
       <div class="container">
@@ -93,6 +116,16 @@
   </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      showMobileNav: false
+    }
+  }
+}
+</script>
+
 <style lang="scss">
 @import '../assets/scss/main.scss';
 .navbar {
@@ -120,4 +153,29 @@
 .nav-link:hover {
   color: $color-light !important;
 }
+//navigation
+.ham {
+  color: $color-primary;
+}
+.mobile-nav {
+  list-style: none;
+  .nav-item {
+    padding: 10px;
+  }
+}
+@media(min-width:991px) {
+  .ham, .mobile-nav {
+    display: none;
+  }
+}
+.navbar-hide {
+  height: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+}
+.navbar-open {
+  height: 260px;
+  visibility: visible;
+}
+
 </style>
