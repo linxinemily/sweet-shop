@@ -1,7 +1,7 @@
 import Vuex from 'vuex'
 import axios from 'axios'
 import Cookie from 'js-cookie'
-import { request } from 'http';
+import { request } from 'http'
 
 const createStore = () => {
   return new Vuex.Store({
@@ -173,7 +173,9 @@ const createStore = () => {
       addProduct(vuexContext, product) {
         return axios
           .post(
-            `https://dessert-shop-emliy.firebaseio.com/products.json?auth=${vuexContext.state.token}`,
+            `https://dessert-shop-emliy.firebaseio.com/products.json?auth=${
+              vuexContext.state.token
+            }`,
             product
           )
           .then(result => {
@@ -189,7 +191,9 @@ const createStore = () => {
       editProduct(vuexContext, editedProduct) {
         return axios
           .put(
-            `https://dessert-shop-emliy.firebaseio.com/products/${editedProduct.id}.json?auth=${vuexContext.state.token}`,
+            `https://dessert-shop-emliy.firebaseio.com/products/${
+              editedProduct.id
+            }.json?auth=${vuexContext.state.token}`,
             editedProduct
           )
           .then(res => {
@@ -202,7 +206,9 @@ const createStore = () => {
       deleteProduct(vuexContext, editedProduct) {
         return axios
           .delete(
-            `https://dessert-shop-emliy.firebaseio.com/products/${editedProduct.id}.json?auth=${vuexContext.state.token}`
+            `https://dessert-shop-emliy.firebaseio.com/products/${
+              editedProduct.id
+            }.json?auth=${vuexContext.state.token}`
           )
           .then(res => {
             console.log(res)
@@ -229,9 +235,15 @@ const createStore = () => {
           .then(res => {
             vuexContext.commit('setToken', res.data.idToken)
             localStorage.setItem('token', res.data.idToken)
-            localStorage.setItem('tokenExpiration', new Date().getTime() + Number.parseInt(res.data.expiresIn) * 1000)
+            localStorage.setItem(
+              'tokenExpiration',
+              new Date().getTime() + Number.parseInt(res.data.expiresIn) * 1000
+            )
             Cookie.set('jwt', res.data.idToken)
-            Cookie.set('expirationDate', new Date().getTime() + Number.parseInt(res.data.expiresIn) * 1000)
+            Cookie.set(
+              'expirationDate',
+              new Date().getTime() + Number.parseInt(res.data.expiresIn) * 1000
+            )
             console.log(res)
           })
       },
