@@ -24,6 +24,50 @@
         </div>
       </div>
     </section>
+    <section class="whyDesserts container-fluid">
+      <div class="container">
+        <img
+          src="https://bit.ly/2Dwoxd7"
+          class="content-img">
+        <div class="row">
+          <div class="col-md-6" />
+          <div class="col-md-6 d-flex justify-content-md-end align-items-md-start">
+            <div class="text">是非成敗轉頭空，滾滾長江東逝水，<br>白髮漁樵江渚上，古今多少事，都付笑談中。<br>是非成敗轉頭空，滾滾長江東逝水，<br>白髮漁樵江渚上，古今多少事，都付笑談中。</div>
+            <img
+              src="../assets/images/lg-為什麼選擇了做甜點.svg"
+              class="slogan">
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="whyDesserts container-fluid">
+      <div class="container">
+        <img
+          src="https://bit.ly/2zzAQS4"
+          class="content-img right">
+        <div class="row">
+          <div class="col-md-6 d-flex justify-content-md-end align-items-md-start">
+            <div class="text">是非成敗轉頭空，滾滾長江東逝水，<br>白髮漁樵江渚上，古今多少事，都付笑談中。<br>是非成敗轉頭空，滾滾長江東逝水，<br>白髮漁樵江渚上，古今多少事，都付笑談中。</div>
+            <img
+              src="../assets/images/lg-為什麼一定要吃甜點.svg"
+              class="slogan">
+          </div>
+          <div class="col-md-6" />
+        </div>
+      </div>
+    </section>
+    <section class="d-flex justify-content-center align-items-center pt-4 pb-4">
+      <img
+        src="../assets/images/lg-想吃甜點是不需要理由的.svg"
+        class="slogan">
+    </section>
+    <section class="products container">
+      <no-ssr placeholder="Loading...">
+        <product-carousel
+          :threeCol="true"
+          @addToCart="addToCart" />
+      </no-ssr>
+    </section>
   </div>
 </template>
 
