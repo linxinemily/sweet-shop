@@ -83,9 +83,7 @@ export default {
     productCarousel,
   },
   mounted() {
-    this.$nextTick(function () {
-      this.$store.commit('updateCarts')
-    })
+    this.$store.commit('updateCarts')
   },
   methods: {
     changeCategory(categoryName) {
