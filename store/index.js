@@ -13,7 +13,8 @@ const createStore = () => {
         recommend: 0,
         newIn: 0
       },
-      token: null
+      token: null,
+      showErr: false
     },
     getters: {
       items_count_in_cart: state => {
@@ -155,6 +156,9 @@ const createStore = () => {
       },
       clearToken: state => {
         state.token = null
+      },
+      error: state => {
+        state.showErr = !state.showErr
       }
     },
     actions: {
@@ -244,7 +248,10 @@ const createStore = () => {
               'expirationDate',
               new Date().getTime() + Number.parseInt(res.data.expiresIn) * 1000
             )
-            console.log(res)
+          })
+          .catch(e => {
+            console.log(e)
+            vuexContext.commit('error')
           })
       },
       initAuth(vuexContext, req) {

@@ -11,9 +11,8 @@
             type="file"
             name="file"
             style="display:none;"
-            @change="handleFileUpload">
-          <button @click="$refs.file.click()">選擇圖片</button>
-          <button @click="onSubmit">上傳圖片</button>
+            @change="handleFileUpload()">
+          <button @click="$refs.file.click()">上傳圖片</button>
           <div
             v-show="editedProduct.imgUrl"
             class="img-outer">
@@ -125,6 +124,7 @@ export default {
   methods: {
     handleFileUpload() {
       this.file = this.$refs.file.files[0]
+      this.onSubmit()
     },
     onSubmit() {
       let apiUrl = 'https://api.imgur.com/3/image'

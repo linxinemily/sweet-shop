@@ -1,18 +1,27 @@
 <template>
-  <div class="container d-flex justify-content-center">
+  <div class="container d-flex justify-content-center bg-image">
     <div class="form-outer">
       <h3 class="mb-4">管理員{{ isLogin ? '登入' : '註冊' }}</h3>
       <div class="logOrSignForm">
-        <form @submit.prevent="onSubmit">
+        <form
+          class="text-center"
+          @submit.prevent="onSubmit">
           <input
             type="text"
             placeholder="您的帳號"
+            value="test@test.com"
             v-model="email">
           <input
             type="password"
+            value="aa23927100"
             placeholder="您的密碼"
             v-model="password">
-          <button type="submit">{{ isLogin ? '登入' : '註冊' }}</button>
+          <button
+            type="submit"
+            class="btn-primary mb-2">{{ isLogin ? '登入' : '註冊' }}</button>
+          <p
+            v-if="showErr"
+            class="errMeg">帳號或密碼有誤，請重新輸入</p>
           <span
             class="change-text"
             @click="isLogin = !isLogin">我要{{ isLogin ? '註冊' : '登入' }}</span>
@@ -23,6 +32,8 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import { mapState, mapGetters } from 'vuex'
 export default {
   layout: 'mainNav',
   data() {
@@ -30,6 +41,11 @@ export default {
       isLogin: true,
       email: '',
       password: ''
+    }
+  },
+  computed: {
+    showErr() {
+      return this.$store.state.showErr
     }
   },
   methods: {
@@ -59,23 +75,39 @@ export default {
       background-color: $color-lighter;
       margin-bottom: 20px;
       padding: 4px 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2) inset;
+      border-radius: 4px;
+      &:focus {
+        outline: none;
+      }
+    }
+    .btn-primary {
+      width: 100%;
     }
   }
 }
 .form-outer {
-  background-color: $color-primary;
-  padding: 40px;
-  margin-bottom: 40px;
+  width: 30%;
   h3 {
     text-align: center;
-    color: $color-lighter;
+    color: $color-primary;
   }
 }
 .change-text {
-  color: #fff;
+  color: $color-primary;
   cursor: pointer;
   &:hover {
     text-decoration: underline;
   }
+}
+.bg-image {
+  width: 100%;
+  background-image: url('https://bit.ly/2P7GhNd');
+  background-size: cover;
+  background-position: center;
+  padding: 140px 0;
+}
+.errMeg {
+  color: red;
 }
 </style>
