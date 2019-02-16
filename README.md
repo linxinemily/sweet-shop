@@ -8,7 +8,7 @@ https://my-sweet-shop.herokuapp.com/
 
 ## Intro
 
-It's a front-end project for practicing, which main features are including:
+It's a front-end project for practicing, main features are including:
 
 1. Shopping Cart
 2. Admin Log in/Sign up
