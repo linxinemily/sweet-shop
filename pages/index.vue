@@ -9,19 +9,27 @@
         class="hero-img"
         src="https://bit.ly/2OhbMHr">
       <div class="row square-outer">
-        <div class="col-md-4 square">
-          <nuxt-link to="/shop">
-            <div class="text">
-              本日精選
-            </div>
-          </nuxt-link>
-        </div>
-        <div class="col-md-4 square">
-          <div class="text">人氣推薦</div>
-        </div>
-        <div class="col-md-4 square">
-          <div class="text">新品上市</div>
-        </div>
+        <nuxt-link
+          :to="{name: 'shop', params: { deCategory:'selected' } }"
+          class="col-md-4 square">
+          <div class="text">
+            本日精選
+          </div>
+        </nuxt-link>
+        <nuxt-link
+          :to="{name: 'shop', params: { deCategory:'recommend' } }"
+          class="col-md-4 square">
+          <div class="text">
+            人氣推薦
+          </div>
+        </nuxt-link>
+        <nuxt-link
+          :to="{name: 'shop', params: { deCategory:'newIn' } }"
+          class="col-md-4 square">
+          <div class="text">
+            新品上市
+          </div>
+        </nuxt-link>
       </div>
     </section>
     <section class="whyDesserts container-fluid">

@@ -43,7 +43,9 @@
     <div
       class="my-cart"
       @click="clickBtn = !clickBtn">
-      <div class="number">{{ items_count_in_cart }}</div>
+      <div
+        class="number"
+        v-if="items_count_in_cart">{{ items_count_in_cart }}</div>
       <font-awesome-icon
         icon="shopping-cart"
         class="fa-lg" />

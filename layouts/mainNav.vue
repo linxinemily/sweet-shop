@@ -171,6 +171,7 @@ export default {
 .navbar-hide {
   height: 0;
   visibility: hidden;
+  overflow: hidden;
   transition: all 0.3s;
 }
 .navbar-open {

@@ -5,8 +5,8 @@
       @minusItem="minusItem"
       @deleteItem="deleteItem"/>
     <div class="container">
-      <div class="sidebar float-left">
-        <div class="header">甜點類別</div>
+      <div class="sidebar float-md-left">
+        <div class="header">{{ $route.params.deCategory }}</div>
         <div class="categories">
           <div
             :class="{ 'active' : category === 'all' }"
@@ -43,6 +43,11 @@ import shoppingCarts from '~/components/shoppingCarts'
 export default {
   layout: 'mainNav',
   components: { productCards, shoppingCarts },
+  asyncData ({ params }) {
+    return {
+      deCategory: params.deCategory
+    }
+  },
   data() {
     return {
       category: 'all',
@@ -52,6 +57,8 @@ export default {
   },
   mounted() {
     this.$store.commit('updateCarts')
+    this.category = this.$route.params.deCategory
+    console.log(this.deCategory)
   },
   methods: {
     changeCategory(categoryName) {
@@ -72,4 +79,11 @@ export default {
 
 <style lang="scss">
 @import '../assets/scss/main.scss';
+@media (max-width: 767px) {
+  .sidebar {
+      width: 100%;
+      margin: auto;
+      margin-bottom: 20px;
+  }
+}
 </style>
