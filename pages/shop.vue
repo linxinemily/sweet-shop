@@ -6,7 +6,7 @@
       @deleteItem="deleteItem"/>
     <div class="container">
       <div class="sidebar float-md-left">
-        <div class="header">{{ $route.params.deCategory }}</div>
+        <div class="header">商品分類</div>
         <div class="categories">
           <div
             :class="{ 'active' : category === 'all' }"
