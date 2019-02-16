@@ -1,22 +1,27 @@
-# shop-nuxt
+# Dessert Shop
 
-> My lovely Nuxt.js project -test2
+> A SSR web application build with Nuxt.js
 
-## Build Setup
 
-``` bash
-# install dependencies
-$ npm install
+## DEMO
+https://my-sweet-shop.herokuapp.com/
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+## Intro
 
-# build for production and launch server
-$ npm run build
-$ npm start
+It's a front-end project for practicing, main features are including:
 
-# generate static project
-$ npm run generate
-```
+1. Shopping Cart
+2. Admin Log in/Sign up
+3. Products management(CRUD)
 
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+### Practice items
+
+1. Nuxt.js
+2. Vuex
+3. Vue componentization
+4. api connection(imgur api, Firebase api)
+5. local storage/session storage/Cookie
+6. import third-party vue library into my Nuxt.js App (Fontawesome, Vue carousel)
+7. Web UI(RWD, SCSS)
+
+** design is credited to 六角學院 F2E-甜點電商切版PK **
