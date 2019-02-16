@@ -1,4 +1,4 @@
-# Desert Shop
+# Dessert Shop
 
 > A SSR web application build with Nuxt.js
 
