@@ -405,6 +405,13 @@ footer{
   color: $color-primary;
   box-shadow: 2px 2px 4px rgba(63, 93, 69, 0.05),
     2px 2px 10px rgba(0, 0, 0, 0.1);
+  @include phone-width {
+    min-width: unset;
+    margin: 0 auto;
+    margin-left: 20px;
+    right: auto;
+    width: 90%;
+  }
   img {
     width: 40px;
     height: 40px;
