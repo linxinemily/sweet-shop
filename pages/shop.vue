@@ -57,8 +57,9 @@ export default {
   },
   mounted() {
     this.$store.commit('updateCarts')
-    this.category = this.$route.params.deCategory
-    console.log(this.deCategory)
+    if(this.$route.params.deCategory) {
+      this.category = this.$route.params.deCategory
+    }
   },
   methods: {
     changeCategory(categoryName) {
