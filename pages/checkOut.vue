@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <div class="d-flex">
+    <div class="d-flex checkList">
       <div class="productList mb-5">
         <div class="title text-center">您的購物車</div>
         <div
           class="cta-block d-flex justify-content-center align-items-center"
-          v-if="!items || !items.lenght">
+          v-if="!items || !items.length">
           <div class="text-center mt-4 mb-4">
             <p class="text-center mb-4">您的購物車裡面還沒有東西呢，去商店逛逛吧！</p>
             <nuxt-link
@@ -92,12 +92,20 @@ export default {
 <style lang="scss">
 @import '../assets/scss/main.scss';
 //購物車
+.checkList {
+  @media(max-width:992px) {
+    flex-direction: column;
+  }
+}
 .productList {
   width: calc(100% - 300px);
   margin-right: 20px;
   color: $color-primary;
   border:1px solid $color-lighter;
   height: 100%;
+  @media(max-width:992px) {
+    width: 100%;
+  }
   .title {
     background-color: $color-lighter;
     font-weight: 600;
@@ -109,6 +117,10 @@ export default {
     width: 110px;
     height: 110px;
     object-fit: cover;
+    @include phone-width {
+      width: 60px;
+      height: 60px;
+    }
   }
   .info {
     .name {
@@ -145,6 +157,9 @@ export default {
 //訂單摘要
 .checkOutBox {
   width: 300px;
+  @media(max-width:992px) {
+    width: 100%;
+  }
   .content {
     background-color: $color-lighter;
     padding: 30px;

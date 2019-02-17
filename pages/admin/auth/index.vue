@@ -90,6 +90,9 @@ export default {
 }
 .form-outer {
   width: 30%;
+  @include phone-width {
+    width: 80%;
+  }
   h3 {
     text-align: center;
     color: $color-primary;
